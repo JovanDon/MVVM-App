@@ -60,7 +60,7 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Sincere@april.biz"
+                        android:text="Julianne.OConner@kory.org"
                         android:textColor="#4267B2"
                         android:layout_marginEnd="5dp"
                         android:layout_marginRight="5dp"/>
@@ -68,9 +68,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginRight="5dp"/>
+                        android:layout_weight="0"/>
 
                     <TextView
                         android:id="@+id/phone"

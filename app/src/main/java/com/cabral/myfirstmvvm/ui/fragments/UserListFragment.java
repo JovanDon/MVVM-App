@@ -1,5 +1,6 @@
 package com.cabral.myfirstmvvm.ui.fragments;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -45,7 +46,9 @@ public class UserListFragment extends Fragment {
 
         mUserAdapter = new UserAdapter(mUserClickCallback);
         mBinding.usersList.setAdapter(mUserAdapter);
+        mBinding.toolbar.setTitle(getString(R.string.user_list_title));
 
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mBinding.toolbar);
         return mBinding.getRoot();
     }
 
