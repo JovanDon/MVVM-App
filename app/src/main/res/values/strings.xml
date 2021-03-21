@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MyFirstMVVM</string>
+    <string name="search_user_hint">Search User...</string>
+    <string name="cd_search_users">Search Users</string>
+    <string name="loading_users">Loading users...</string>
+    <string name="cd_users_list">Users List</string>
+    <string name="cd_user_name">User Name</string>
+    <string name="phone">Phone: %s</string>
+</resources>
