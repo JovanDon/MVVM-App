@@ -88,7 +88,7 @@ public class UserListFragment extends Fragment {
 
     private final UserClickCallback mUserClickCallback = userDetails -> {
         if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-           // ((MainActivity) requireActivity()).show(userDetails);
+            ((MainActivity) requireActivity()).show(userDetails);
         }
     };
 

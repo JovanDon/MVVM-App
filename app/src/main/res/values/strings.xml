@@ -8,4 +8,10 @@
     <string name="username"> (%s)</string>
     <string name="address">Address: %s, %s, %s</string>
     <string name="user_list_title">User Profiler</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading_Posts">Loading Posts ...</string>
+    <string name="cd_posts_list">Lists Of User Posts</string>
+    <string name="user_details">User Details</string>
+    <string name="loading_user_details">Loading User Details ...</string>
 </resources>

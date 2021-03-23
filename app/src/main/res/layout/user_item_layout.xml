@@ -9,6 +9,17 @@
             type="com.cabral.myfirstmvvm.ui.callbacks.UserClickCallback"/>
     </data>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loading_comments_tv"
+        android:text="@string/loading_user_details"
+        app:visibleGone="@{userDetails.name==null}"/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +29,9 @@
         android:layout_marginStart="@dimen/item_horizontal_margin"
         android:layout_marginEnd="@dimen/item_horizontal_margin"
         android:layout_marginTop="10dp"
-        app:cardUseCompatPadding="true">
+        app:cardBackgroundColor="#f3f2f2"
+        app:cardUseCompatPadding="true"
+        app:visibleGone="@{userDetails.name!=null}">
 
         <RelativeLayout
             android:layout_marginStart="@dimen/item_horizontal_margin"
@@ -59,7 +72,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@{userDetails.email}"
-                        android:textColor="#4267B2"
+                        android:textColor="#0A0708"
                         android:layout_marginEnd="5dp"
                         android:layout_marginRight="5dp"/>
 
@@ -70,7 +83,7 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="#4267B2"
+                        android:textColor="#0A0708"
                         android:text="@{userDetails.phone}"
                         android:layout_marginEnd="5dp"
                         android:layout_marginRight="5dp"/>
@@ -88,7 +101,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@{@string/address(userDetails.address.city,userDetails.address.street,userDetails.address.suite)}"
-                        android:textColor="#4267B2"
+                        android:textColor="#0A0708"
                         android:layout_marginEnd="5dp"
                         android:layout_marginRight="5dp"/>
 
@@ -103,4 +116,7 @@
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
 </layout>

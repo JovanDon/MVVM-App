@@ -21,7 +21,11 @@ public interface ApiRequests {
 
     // //get userPosts
     @GET("posts")
-    Call<List<UserPost>> getPosts(@Query("userId") String userId);
+    Call<List<UserPost>> getPosts(@Query("userId") int userId);
+
+    // //get users Details
+    @GET("users")
+    Call<List<UserDetails>> getUserDetails(@Query("id") int id);
 
     //get User albums
     @GET("albums")

@@ -3,7 +3,9 @@ package com.cabral.myfirstmvvm.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserDetails {
+import java.io.Serializable;
+
+public class UserDetails implements Serializable {
 
     @SerializedName("id")
     @Expose

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="userPost"
+            type="com.cabral.myfirstmvvm.models.UserPost"/>
+        <variable name="callback"
+            type="com.cabral.myfirstmvvm.ui.callbacks.PostClickCallback"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/user_item_min_height"
+        android:onClick="@{() ->  callback.onClick(userPost)}"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/item_horizontal_margin"
+        android:layout_marginEnd="@dimen/item_horizontal_margin"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="#f3f2f2"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_marginStart="@dimen/item_horizontal_margin"
+            android:layout_marginEnd="@dimen/item_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/cd_user_name"
+                    android:textColor="#4267B2"
+                    android:textSize="15sp"
+                    android:text="@{userPost.title}"/>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/body_layout"
+                android:layout_below="@+id/title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{userPost.body}"
+                    android:textColor="#0A0708"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"/>
+
+            </LinearLayout>
+
+
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
