@@ -34,14 +34,6 @@ public class UserDetailsFragment extends Fragment {
 
 
 
-    public static UserDetailsFragment newInstance(Integer user_id) {
-        UserDetailsFragment fragment = new UserDetailsFragment();
-        Bundle bundle=new Bundle();
-        bundle.putInt(KEY_USER_ID,user_id);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

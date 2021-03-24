@@ -34,10 +34,6 @@ public class UserListFragment extends Fragment {
 
     private UserListFragmentBinding mBinding;
 
-    public static UserListFragment newInstance() {
-        return new UserListFragment();
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
