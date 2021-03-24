@@ -70,4 +70,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$nav_version"
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    //fragment testing
+    def fragment_version = "1.3.1"
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 }

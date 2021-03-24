@@ -1,10 +1,8 @@
 package com.cabral.myfirstmvvm.viewmodels;
 
 import android.app.Application;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 

@@ -12,7 +12,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 

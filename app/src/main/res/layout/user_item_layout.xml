@@ -21,6 +21,7 @@
         app:visibleGone="@{userDetails.name==null}"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/UserCard_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/user_item_min_height"

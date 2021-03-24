@@ -13,7 +13,6 @@ import com.cabral.myfirstmvvm.models.UserPost;
 import com.cabral.myfirstmvvm.network.UsersDataRepository;
 
 import java.util.List;
-import java.util.Observable;
 
 public class UserViewModel extends AndroidViewModel {
 
