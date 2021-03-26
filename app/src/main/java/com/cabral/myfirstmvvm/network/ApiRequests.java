@@ -1,10 +1,8 @@
 package com.cabral.myfirstmvvm.network;
 
 import com.cabral.myfirstmvvm.models.PostComments;
-import com.cabral.myfirstmvvm.models.UserAlbum;
 import com.cabral.myfirstmvvm.models.UserDetails;
 import com.cabral.myfirstmvvm.models.UserPost;
-import com.cabral.myfirstmvvm.models.UserTodo;
 
 import java.util.List;
 
@@ -37,4 +35,11 @@ public interface ApiRequests {
     //get User todo
     @GET("comments")
     Call<List<PostComments>> getPostComments(@Query("postId") String postId);
+
+    //implement the following http verbs
+
+    // POST
+    // PUT/PATCH
+    // DELETE
+    // GET
 }

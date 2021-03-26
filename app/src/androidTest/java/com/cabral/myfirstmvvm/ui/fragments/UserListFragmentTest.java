@@ -47,7 +47,6 @@ public class UserListFragmentTest {
     }
 
     private void startUserListFragment() {
-
         navHostController= new TestNavHostController(ApplicationProvider.getApplicationContext());
         navHostController.setGraph(R.navigation.main_nav_graph);
 
