@@ -84,8 +84,7 @@ public class UserListFragment extends Fragment {
             } else {
                 mBinding.setIsLoading(true);
             }
-            // espresso does not know how to wait for data binding's loop so we execute changes
-            // sync.
+
             mBinding.executePendingBindings();
         });
     }

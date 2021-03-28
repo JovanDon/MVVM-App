@@ -23,8 +23,9 @@ public interface UserDao {
     @Query("SELECT User.* FROM User")
     LiveData<List<UserDetailsRelation>> getUsers();
 
-    @Query("SELECT * FROM User where id = :user_id")
-    LiveData<User> getUser(int user_id);
+    @Transaction
+    @Query("SELECT User.* FROM User where User.id = :user_id")
+    LiveData<UserDetailsRelation> getUser(int user_id);
 
     @Transaction
     @Query("SELECT User.* FROM User WHERE User.id= :user_id")

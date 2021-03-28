@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "user_posts")
-public class UserPost {
+public class UserPostEntity {
     @PrimaryKey
     private int id;
 
@@ -13,6 +13,13 @@ public class UserPost {
     private String title;
 
     private String body;
+
+    public UserPostEntity(int id, int userId, String title, String body) {
+        this.id = id;
+        this.userId = userId;
+        this.title = title;
+        this.body = body;
+    }
 
     public int getId() {
         return id;
@@ -53,4 +60,5 @@ public class UserPost {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
 }

@@ -6,16 +6,16 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.cabral.myfirstmvvm.network.db.entities.UserPost;
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 
 import java.util.List;
 
 @Dao
 public interface UserPostDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(UserPost userPost);
+    void insert(UserPostEntity userPost);
 
 
-    @Query("SELECT user_posts.* FROM user_posts")
-    LiveData<List<UserPost>> getPosts();
+    @Query("SELECT user_posts.* FROM user_posts WHERE user_posts.userId=:user_id")
+    LiveData<List<UserPostEntity>> getPosts(int user_id);
 }

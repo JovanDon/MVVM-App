@@ -43,38 +43,9 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
         holder.binding.executePendingBindings();
     }
     public void setPostList( List<? extends UserPost> postList){
-        if(mUserPosts==null){
+        if(postList==null){
             mUserPosts=postList;
             notifyItemRangeInserted(0,mUserPosts.size());
-        }else{
-            DiffUtil.DiffResult results=DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                @Override
-                public int getOldListSize() {
-                    return mUserPosts.size();
-                }
-
-                @Override
-                public int getNewListSize() {
-                    return postList.size();
-                }
-
-                @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return postList.get(newItemPosition).getUser_id()==mUserPosts.get(oldItemPosition).getUser_id();
-                }
-
-                @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    UserPost oldUser=mUserPosts.get(oldItemPosition);
-                    UserPost newUser=postList.get(newItemPosition);
-                    return oldUser.getUser_id() == newUser.getUser_id()
-                            && TextUtils.equals(oldUser.getId(),newUser.getId())
-                            && TextUtils.equals(oldUser.getTitle(),newUser.getTitle())
-                            && TextUtils.equals(oldUser.getBody(),newUser.getBody());
-                }
-            });
-            mUserPosts=postList;
-            results.dispatchUpdatesTo(this);
         }
 
     }

@@ -13,13 +13,9 @@ import com.cabral.myfirstmvvm.network.db.daos.UserPostDao;
 import com.cabral.myfirstmvvm.network.db.entities.Address;
 import com.cabral.myfirstmvvm.network.db.entities.User;
 import com.cabral.myfirstmvvm.network.db.entities.UserCompany;
-import com.cabral.myfirstmvvm.network.db.entities.UserPost;
-import com.cabral.myfirstmvvm.network.db.relations.UserWithAddress;
-import com.cabral.myfirstmvvm.responses.UserDetails;
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 
-import java.util.List;
-
-@Database( entities = {User.class, Address.class, UserCompany.class, UserPost.class},version =3, exportSchema = false)
+@Database( entities = {User.class, Address.class, UserCompany.class, UserPostEntity.class},version =3, exportSchema = false)
 public abstract class RoomDb extends RoomDatabase {
 
     public abstract UserDao userDao();

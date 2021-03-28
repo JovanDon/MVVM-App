@@ -243,4 +243,5 @@ public class UserDetails implements Serializable {
     public void setCompany(UserCompany company) {
         this.company = company;
     }
+
 }

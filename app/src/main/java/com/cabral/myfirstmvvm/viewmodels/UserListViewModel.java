@@ -18,7 +18,7 @@ import com.cabral.myfirstmvvm.util.Resource;
 import java.util.List;
 
 public class UserListViewModel extends AndroidViewModel {
-    private static final String TAG = "RecipeListViewModel";
+    private static final String TAG = "UserListViewModel";
     public static final String QUERY_EXHAUSTED = "No more results.";
 
     private final UsersDataRepository mRepository;
@@ -29,9 +29,9 @@ public class UserListViewModel extends AndroidViewModel {
     // query extras
     private boolean isQueryExhausted;
     private boolean isPerformingQuery;
-    private int pageNumber;
     private boolean cancelRequest;
     private long requestStartTime;
+    private int pageNumber;
 
     public UserListViewModel(@NonNull Application application) {
         super(application);

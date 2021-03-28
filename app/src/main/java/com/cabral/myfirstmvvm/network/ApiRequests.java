@@ -9,6 +9,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiRequests {
@@ -22,8 +23,8 @@ public interface ApiRequests {
     Call<List<UserPost>> getPosts(@Query("userId") int userId);
 
     // //get users Details
-    @GET("users")
-    Call<List<UserDetails>> getUserDetails(@Query("id") int id);
+    @GET("users/{id}")
+    Call<UserDetails> getUserDetails(@Path("id") int id);
 
 
     //get User todo

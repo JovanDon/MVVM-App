@@ -21,6 +21,7 @@ import com.cabral.myfirstmvvm.databinding.FragmentUserDetailsBinding;
 import com.cabral.myfirstmvvm.responses.UserPost;
 import com.cabral.myfirstmvvm.ui.adapters.UserPostAdapter;
 import com.cabral.myfirstmvvm.ui.callbacks.PostClickCallback;
+import com.cabral.myfirstmvvm.util.Resource;
 import com.cabral.myfirstmvvm.viewmodels.UserViewModel;
 
 import java.util.List;
@@ -63,8 +64,11 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        UserViewModel.Factory factory=new UserViewModel.Factory( requireActivity().getApplication(),
-                requireArguments().getInt(KEY_USER_ID));
+
+        UserViewModel.Factory factory=new UserViewModel.Factory(
+                requireActivity().getApplication(),
+                requireArguments().getInt(KEY_USER_ID)
+        );
 
         UserViewModel userViewModel= new ViewModelProvider(this,factory).get(UserViewModel.class);
 
@@ -73,12 +77,13 @@ public class UserDetailsFragment extends Fragment {
         subscribeUi(userViewModel.getmUserPost());
     }
 
-    private void subscribeUi(LiveData<List<UserPost>> liveData) {
+    private void subscribeUi(LiveData<Resource<List<UserPost>>> liveData) {
         // Update the list when the data changes
         liveData.observe(getViewLifecycleOwner(), myPosts -> {
-            if (myPosts != null) {
+            if (myPosts.data != null) {
                 mBinding.setIsLoading(false);
-                mUserPostAdapter.setPostList(myPosts);
+                mUserPostAdapter.setPostList(myPosts.data);
+
             } else {
                 mBinding.setIsLoading(true);
             }

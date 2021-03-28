@@ -9,13 +9,20 @@ public class UserPost {
     private int user_id;
     @SerializedName("id")
     @Expose
-    private String id;
+    private int id;
     @SerializedName("title")
     @Expose
     private String title;
     @SerializedName("body")
     @Expose
     private String body;
+
+    public UserPost(int user_id, int id, String title, String body) {
+        this.user_id = user_id;
+        this.id = id;
+        this.title = title;
+        this.body = body;
+    }
 
     public int getUser_id() {
         return user_id;
@@ -25,11 +32,11 @@ public class UserPost {
         this.user_id = user_id;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
