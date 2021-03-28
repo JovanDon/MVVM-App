@@ -10,8 +10,6 @@ public class UserAddress {
     @PrimaryKey
     private int id;
 
-    private String user_id;
-
     private String street;
 
     private String suite;
@@ -30,14 +28,6 @@ public class UserAddress {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
     }
 
     public String getStreet() {

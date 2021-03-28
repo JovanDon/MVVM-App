@@ -8,12 +8,11 @@ import com.cabral.myfirstmvvm.network.db.entities.UserCompany;
 
 public class UserDetails {
     @Embedded
-    public UserCompany company;
-    @Relation(
-            parentColumn = "user_id",
-            entityColumn = "id",
-            entity = User.class
-    )
     public UserWithAddress userWithAddress;
+    @Relation(
+            parentColumn = "id",
+            entityColumn = "user_id"
+    )
+    public UserCompany company;
 
 }
