@@ -8,6 +8,7 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.cabral.myfirstmvvm.LiveDataTestUtil;
 import com.cabral.myfirstmvvm.network.db.RoomDb;
 import com.cabral.myfirstmvvm.network.db.entities.User;
 import com.cabral.myfirstmvvm.network.db.relations.UserDetailsRelation;
@@ -50,18 +51,18 @@ public class UserDaoTest {
         TestData.userTestData.setEmail(testEmail);
         RoomDb.insertUserData(mDatabase,TestData.userTestData,TestData.addressTestData,TestData.companyTestData);
 
-        LiveData<User> users =  mUserDao.getUser(TestData.userTestData.getId());
+        List<UserDetailsRelation> users = LiveDataTestUtil.getValue( mUserDao.getUsers() );
 
-        assertNotNull(users.getValue());
+        assertNotNull(users);
 
-//        assertTrue(users.getValue().size()>0);
-//
-//        List<String> emailList=new ArrayList<>();
-//        for (UserDetailsRelation user :users.getValue()) {
-//            emailList.add(user.userWithAddress.user.getEmail());
-//        }
-//
-//       assertTrue(emailList.contains(testEmail));
+        assertTrue(users.size()>0);
+
+        List<String> emailList=new ArrayList<>();
+        for (UserDetailsRelation user :users) {
+            emailList.add(user.userWithAddress.user.getEmail());
+        }
+
+       assertTrue(emailList.contains(testEmail));
     }
 
     @After
