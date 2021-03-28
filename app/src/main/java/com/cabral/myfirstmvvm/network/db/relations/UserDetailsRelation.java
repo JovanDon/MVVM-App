@@ -6,7 +6,7 @@ import androidx.room.Relation;
 import com.cabral.myfirstmvvm.network.db.entities.User;
 import com.cabral.myfirstmvvm.network.db.entities.UserCompany;
 
-public class UserDetails {
+public class UserDetailsRelation {
     @Embedded
     public UserWithAddress userWithAddress;
     @Relation(

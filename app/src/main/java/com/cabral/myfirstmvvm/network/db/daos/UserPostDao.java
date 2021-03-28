@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.cabral.myfirstmvvm.models.UserDetails;
 import com.cabral.myfirstmvvm.network.db.entities.UserPost;
 
 import java.util.List;

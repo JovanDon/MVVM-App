@@ -7,8 +7,8 @@ import android.os.Bundle;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.cabral.myfirstmvvm.models.UserDetails;
-import com.cabral.myfirstmvvm.models.UserPost;
+import com.cabral.myfirstmvvm.responses.UserDetails;
+import com.cabral.myfirstmvvm.responses.UserPost;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;
@@ -37,22 +37,6 @@ public class MainActivity extends AppCompatActivity {
         navController.navigate(R.id.action_userListFragment_to_userDetailsFragment,bundle);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            // Pop previous Fragment
-            getSupportFragmentManager().popBackStack();
-
-        }else{
-            navController.navigate(R.id.action_userDetailsFragment_to_userListFragment);
-        }
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
 
 
 }

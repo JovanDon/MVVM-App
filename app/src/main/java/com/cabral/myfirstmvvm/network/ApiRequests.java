@@ -1,8 +1,9 @@
 package com.cabral.myfirstmvvm.network;
 
-import com.cabral.myfirstmvvm.models.PostComments;
-import com.cabral.myfirstmvvm.models.UserDetails;
-import com.cabral.myfirstmvvm.models.UserPost;
+import com.cabral.myfirstmvvm.responses.ApiResponse;
+import com.cabral.myfirstmvvm.responses.PostComments;
+import com.cabral.myfirstmvvm.responses.UserDetails;
+import com.cabral.myfirstmvvm.responses.UserPost;
 
 import java.util.List;
 
@@ -24,13 +25,6 @@ public interface ApiRequests {
     @GET("users")
     Call<List<UserDetails>> getUserDetails(@Query("id") int id);
 
-    //get User albums
-    @GET("albums")
-    Call<List<UserAlbum>> getAlbums(@Query("userId") String userId);
-
-    //get User todo
-    @GET("albums")
-    Call<List<UserTodo>> getTodo(@Query("userId") String userId);
 
     //get User todo
     @GET("comments")

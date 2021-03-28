@@ -1,4 +1,4 @@
-package com.cabral.myfirstmvvm.models;
+package com.cabral.myfirstmvvm.responses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -32,7 +32,18 @@ public class UserDetails implements Serializable {
     @Expose
     private UserCompany company;
 
-    public class UserCompany{
+    public UserDetails(int user_id, String name, String username, String email, String phone, String website, UserAddress address, UserCompany company) {
+        this.user_id = user_id;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.website = website;
+        this.address = address;
+        this.company = company;
+    }
+
+    public static class UserCompany{
         @SerializedName("name")
         @Expose
         private String name;
@@ -42,6 +53,12 @@ public class UserDetails implements Serializable {
         @SerializedName("bs")
         @Expose
         private String bs;
+
+        public UserCompany(String name, String catchPhrase, String bs) {
+            this.name = name;
+            this.catchPhrase = catchPhrase;
+            this.bs = bs;
+        }
 
         public String getName() {
             return name;
@@ -67,7 +84,7 @@ public class UserDetails implements Serializable {
             this.bs = bs;
         }
     }
-    public class UserAddress{
+    public static class UserAddress{
         @SerializedName("street")
         @Expose
         private String street;
@@ -83,6 +100,14 @@ public class UserDetails implements Serializable {
         @SerializedName("geo")
         @Expose
         private LatLng geo;
+
+        public UserAddress(String street, String suite, String city, String zipcode, LatLng geo) {
+            this.street = street;
+            this.suite = suite;
+            this.city = city;
+            this.zipcode = zipcode;
+            this.geo = geo;
+        }
 
         public String getStreet() {
             return street;
@@ -125,13 +150,26 @@ public class UserDetails implements Serializable {
         }
     }
 
-    public class LatLng{
+    public static class LatLng{
         @SerializedName("lat")
         @Expose
         private double latitude;
         @SerializedName("lng")
         @Expose
         private double longitude;
+
+        public LatLng(double latitude, double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
 
         public double getLatitude() {
             return latitude;

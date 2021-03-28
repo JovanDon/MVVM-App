@@ -9,11 +9,11 @@ import java.util.List;
 
 public class UserDetailsWithPosts {
     @Embedded
-    public List<UserPost> userPosts;
+    public UserDetailsRelation userDetails;
     @Relation(
-            entity = UserWithAddress.class,
-            entityColumn = "id",
-            parentColumn = "userId"
+            parentColumn = "id",
+            entityColumn = "userId"
     )
-    public UserDetails userDetails;
+    public List<UserPost> userPosts;
+
 }

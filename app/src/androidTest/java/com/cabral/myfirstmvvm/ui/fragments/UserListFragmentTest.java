@@ -68,7 +68,7 @@ public class UserListFragmentTest {
     @Test
     public  void  navigateToUserDetails(){
 
-        //Create Graphical FragmentScenario for UserDetails Fragment
+        //Create Graphical FragmentScenario for UserDetailsRelation Fragment
         FragmentScenario userDetailsScenario= FragmentScenario.launchInContainer(UserDetailsFragment.class);
 
         //set NavigationController Property

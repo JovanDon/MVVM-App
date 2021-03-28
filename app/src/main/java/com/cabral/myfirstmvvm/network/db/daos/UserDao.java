@@ -7,7 +7,9 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import com.cabral.myfirstmvvm.models.UserDetails;
+import com.cabral.myfirstmvvm.network.db.entities.User;
+import com.cabral.myfirstmvvm.network.db.relations.UserDetailsRelation;
+
 import com.cabral.myfirstmvvm.network.db.relations.UserDetailsWithPosts;
 
 import java.util.List;
@@ -15,12 +17,11 @@ import java.util.List;
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    @Transaction
-    void insertUser(UserDetails user);
+    void insertUser(User user);
 
     @Transaction
     @Query("SELECT User.* FROM User")
-    LiveData<List<UserDetails>> getUsers();
+    LiveData<List<UserDetailsRelation>> getUsers();
 
 
     @Transaction

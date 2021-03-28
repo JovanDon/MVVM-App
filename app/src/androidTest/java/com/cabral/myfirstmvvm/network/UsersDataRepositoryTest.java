@@ -4,18 +4,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.cabral.myfirstmvvm.models.UserDetails;
-import com.cabral.myfirstmvvm.models.UserPost;
-
-import junit.framework.TestCase;
+import com.cabral.myfirstmvvm.responses.UserDetails;
+import com.cabral.myfirstmvvm.responses.UserPost;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class UsersDataRepositoryTest {

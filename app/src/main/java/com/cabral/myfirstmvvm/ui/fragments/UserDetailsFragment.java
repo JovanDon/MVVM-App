@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import com.cabral.myfirstmvvm.MainActivity;
 import com.cabral.myfirstmvvm.R;
 import com.cabral.myfirstmvvm.databinding.FragmentUserDetailsBinding;
-import com.cabral.myfirstmvvm.models.UserPost;
+import com.cabral.myfirstmvvm.responses.UserPost;
 import com.cabral.myfirstmvvm.ui.adapters.UserPostAdapter;
 import com.cabral.myfirstmvvm.ui.callbacks.PostClickCallback;
 import com.cabral.myfirstmvvm.viewmodels.UserViewModel;

@@ -11,8 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.databinding.DataBindingUtil;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +20,10 @@ import android.view.ViewGroup;
 import com.cabral.myfirstmvvm.MainActivity;
 import com.cabral.myfirstmvvm.R;
 import com.cabral.myfirstmvvm.databinding.UserListFragmentBinding;
-import com.cabral.myfirstmvvm.models.UserDetails;
+import com.cabral.myfirstmvvm.responses.UserDetails;
 import com.cabral.myfirstmvvm.ui.adapters.UserAdapter;
 import com.cabral.myfirstmvvm.ui.callbacks.UserClickCallback;
+import com.cabral.myfirstmvvm.util.Resource;
 import com.cabral.myfirstmvvm.viewmodels.UserListViewModel;
 
 import java.util.List;
@@ -43,6 +43,17 @@ public class UserListFragment extends Fragment {
         mBinding=DataBindingUtil.inflate(inflater,R.layout.user_list_fragment, container, false);
 
         mUserAdapter = new UserAdapter(mUserClickCallback);
+        UserListViewModel mViewModel = new ViewModelProvider(this).get(UserListViewModel.class);
+        mBinding.usersList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(mBinding.usersList.canScrollVertically(1)){
+                    mViewModel.getUsersNextPage();
+
+                }
+            }
+        });
         mBinding.usersList.setAdapter(mUserAdapter);
         mBinding.toolbar.setTitle(getString(R.string.user_list_title));
 
@@ -55,14 +66,9 @@ public class UserListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         UserListViewModel mViewModel = new ViewModelProvider(this).get(UserListViewModel.class);
-        subscribeUi(mViewModel.getUsers());
+        subscribeUi(mViewModel.getCachedUser());
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        // TODO: Use the ViewModel
-    }
     @Override
     public void onDestroyView() {
         mBinding = null;
@@ -70,11 +76,11 @@ public class UserListFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private void subscribeUi(LiveData<List<UserDetails>> liveData){
+    private void subscribeUi(LiveData<Resource<List<UserDetails>>> liveData){
         liveData.observe(getViewLifecycleOwner(),myUsers->{
             if (myUsers != null) {
                 mBinding.setIsLoading(false);
-                mUserAdapter.setUserList(myUsers);
+                mUserAdapter.setUserList(myUsers.data);
             } else {
                 mBinding.setIsLoading(true);
             }

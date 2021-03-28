@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.example.android.persistence;
+package com.cabral.myfirstmvvm;
 
 import android.app.Application;
-import com.example.android.persistence.db.AppDatabase;
+import com.cabral.myfirstmvvm.network.UsersDataRepository;
+import com.cabral.myfirstmvvm.network.db.RoomDb;
 
-/**
- * Android Application class. Used for accessing singletons.
- */
+
 public class BasicApp extends Application {
 
     private AppExecutors mAppExecutors;
@@ -33,11 +32,11 @@ public class BasicApp extends Application {
         mAppExecutors = new AppExecutors();
     }
 
-    public AppDatabase getDatabase() {
-        return AppDatabase.getInstance(this, mAppExecutors);
+    public RoomDb getDatabase() {
+        return RoomDb.getDatabase(this);
     }
 
-    public DataRepository getRepository() {
-        return DataRepository.getInstance(getDatabase());
+    public UsersDataRepository getRepository() {
+        return UsersDataRepository.getInstance(this);
     }
 }

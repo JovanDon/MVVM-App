@@ -1,20 +1,35 @@
 package com.cabral.myfirstmvvm.network.db.entities;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "UserCompany",foreignKeys = {
+        @ForeignKey(entity = User.class,
+                parentColumns = "id",
+                childColumns = "user_id",
+                onDelete = ForeignKey.CASCADE)},
+        indices = {@Index(value = "user_id")
+        })
 public class UserCompany {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String user_id;
+    private int user_id;
 
     private String name;
 
     private String catchPhrase;
 
     private String bs;
+
+    public UserCompany(int user_id, String name, String catchPhrase, String bs) {
+        this.user_id = user_id;
+        this.name = name;
+        this.catchPhrase = catchPhrase;
+        this.bs = bs;
+    }
 
     public int getId() {
         return id;
@@ -24,11 +39,11 @@ public class UserCompany {
         this.id = id;
     }
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 

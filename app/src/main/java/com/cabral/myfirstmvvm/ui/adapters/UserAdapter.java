@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.myfirstmvvm.R;
 import com.cabral.myfirstmvvm.databinding.UserItemLayoutBinding;
-import com.cabral.myfirstmvvm.models.UserDetails;
+import com.cabral.myfirstmvvm.responses.UserDetails;
 import com.cabral.myfirstmvvm.ui.callbacks.UserClickCallback;
 
 import java.util.List;

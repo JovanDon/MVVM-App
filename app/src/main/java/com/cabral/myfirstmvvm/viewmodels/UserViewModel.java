@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.cabral.myfirstmvvm.models.UserDetails;
-import com.cabral.myfirstmvvm.models.UserPost;
+import com.cabral.myfirstmvvm.responses.UserDetails;
+import com.cabral.myfirstmvvm.responses.UserPost;
 import com.cabral.myfirstmvvm.network.UsersDataRepository;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class UserViewModel extends AndroidViewModel {
 
     public UserViewModel(@NonNull Application application,int user_id) {
         super(application);
-        mRepository = UsersDataRepository.getInstance();
+        mRepository = UsersDataRepository.getInstance(application.getApplicationContext());
         mUser = mRepository.getUserDetails(user_id);
         mUserPost = mRepository.getUserPosts(user_id);
     }
