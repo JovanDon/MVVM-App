@@ -3,11 +3,14 @@ package com.cabral.myfirstmvvm.network.db.daos;
 import android.database.sqlite.SQLiteConstraintException;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.cabral.myfirstmvvm.network.db.RoomDb;
+import com.cabral.myfirstmvvm.network.db.entities.User;
+import com.cabral.myfirstmvvm.network.db.relations.UserDetailsRelation;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,8 +18,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static junit.framework.Assert.fail;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.contains;
 
 @RunWith(AndroidJUnit4.class)
 public class UserDaoTest {
@@ -25,8 +31,6 @@ public class UserDaoTest {
 
     private RoomDb mDatabase;
     private UserDao mUserDao;
-    private UserCompanyDao mUserCompanyDao;
-    private UserAddressDao mUserAddressDao;
 
     @Before
     public void initDb() throws Exception {
@@ -38,19 +42,26 @@ public class UserDaoTest {
                 .allowMainThreadQueries()
                 .build();
         mUserDao=mDatabase.userDao();
-        mUserCompanyDao=mDatabase.userCompanyDao();
-        mUserAddressDao=mDatabase.userAddressDao();
     }
 
     @Test
-    public void cantInsertUserWithoutAddressAndCompany() throws InterruptedException {
-        try {
-            mUserDao.insertUser(TestData.userTestData);
+    public void canInsertUser()throws Exception {
+        String testEmail="mutesasirajovan@gmail.com";
+        TestData.userTestData.setEmail(testEmail);
+        RoomDb.insertUserData(mDatabase,TestData.userTestData,TestData.addressTestData,TestData.companyTestData);
 
-            fail("SQLiteConstraintException expected");
-        } catch (SQLiteConstraintException ignored) {
+        LiveData<User> users =  mUserDao.getUser(TestData.userTestData.getId());
 
-        }
+        assertNotNull(users.getValue());
+
+//        assertTrue(users.getValue().size()>0);
+//
+//        List<String> emailList=new ArrayList<>();
+//        for (UserDetailsRelation user :users.getValue()) {
+//            emailList.add(user.userWithAddress.user.getEmail());
+//        }
+//
+//       assertTrue(emailList.contains(testEmail));
     }
 
     @After

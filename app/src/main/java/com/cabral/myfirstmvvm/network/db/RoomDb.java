@@ -14,6 +14,10 @@ import com.cabral.myfirstmvvm.network.db.entities.Address;
 import com.cabral.myfirstmvvm.network.db.entities.User;
 import com.cabral.myfirstmvvm.network.db.entities.UserCompany;
 import com.cabral.myfirstmvvm.network.db.entities.UserPost;
+import com.cabral.myfirstmvvm.network.db.relations.UserWithAddress;
+import com.cabral.myfirstmvvm.responses.UserDetails;
+
+import java.util.List;
 
 @Database( entities = {User.class, Address.class, UserCompany.class, UserPost.class},version =2, exportSchema = false)
 public abstract class RoomDb extends RoomDatabase {
@@ -34,6 +38,18 @@ public abstract class RoomDb extends RoomDatabase {
             }
         }
         return INSTANCE;
+    }
+
+    public static void insertUserData(final RoomDb database,
+                                       final User user,
+                                       final Address address,
+                                       final UserCompany company) {
+        database.runInTransaction(() -> {
+            database.userDao().insertUser(user);
+            database.userAddressDao().insertUserAddress(address);
+            database.userCompanyDao().insertUserCompany(company);
+        });
+
     }
 
 }

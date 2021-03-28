@@ -61,8 +61,8 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.1.0'
     androidTestImplementation 'androidx.test.ext:junit:1.0.0'
     androidTestImplementation 'androidx.test.ext:truth:1.0.0'
-    androidTestImplementation 'com.google.truth:truth:0.42'
-
+    androidTestImplementation 'com.google.truth:truth:1.1.2'
+    testImplementation("org.assertj:assertj-core:3.19.0")
     // Espresso UI Testing
      androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
       androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
