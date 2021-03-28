@@ -78,7 +78,7 @@ public class UserListFragment extends Fragment {
 
     private void subscribeUi(LiveData<Resource<List<UserDetails>>> liveData){
         liveData.observe(getViewLifecycleOwner(),myUsers->{
-            if (myUsers != null) {
+            if (myUsers.data != null) {
                 mBinding.setIsLoading(false);
                 mUserAdapter.setUserList(myUsers.data);
             } else {

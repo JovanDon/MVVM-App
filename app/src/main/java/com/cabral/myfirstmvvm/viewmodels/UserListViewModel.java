@@ -74,7 +74,7 @@ public class UserListViewModel extends AndroidViewModel {
         requestStartTime = System.currentTimeMillis();
         cancelRequest = false;
         isPerformingQuery = true;
-        final LiveData<Resource<List<UserDetails>>> repositorySource=UsersDataRepository.getInstance(context).getUsers();
+        final LiveData<Resource<List<UserDetails>>> repositorySource=mRepository.getUsers();
 
         users.addSource(repositorySource, new Observer<Resource<List<UserDetails>>>() {
             @Override
@@ -95,7 +95,8 @@ public class UserListViewModel extends AndroidViewModel {
                                     ));
                           }
                           users.removeSource(repositorySource);
-                      }else if(listResource.status== Resource.Status.ERROR) {
+                      }
+                      else if(listResource.status== Resource.Status.ERROR) {
                           Log.d(TAG, "onChanged: REQUEST TIME: " + (System.currentTimeMillis() - requestStartTime) / 1000 + " seconds.");
                           isPerformingQuery = false;
                           if (listResource.message.equals(QUERY_EXHAUSTED)) {

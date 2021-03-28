@@ -19,7 +19,7 @@ import com.cabral.myfirstmvvm.responses.UserDetails;
 
 import java.util.List;
 
-@Database( entities = {User.class, Address.class, UserCompany.class, UserPost.class},version =2, exportSchema = false)
+@Database( entities = {User.class, Address.class, UserCompany.class, UserPost.class},version =3, exportSchema = false)
 public abstract class RoomDb extends RoomDatabase {
 
     public abstract UserDao userDao();

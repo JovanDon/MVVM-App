@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 
 import com.cabral.myfirstmvvm.AppExecutors;
 import com.cabral.myfirstmvvm.network.db.daos.UserAddressDao;
@@ -14,7 +16,6 @@ import com.cabral.myfirstmvvm.network.db.entities.Address;
 import com.cabral.myfirstmvvm.network.db.entities.User;
 import com.cabral.myfirstmvvm.network.db.entities.UserCompany;
 import com.cabral.myfirstmvvm.network.db.relations.UserDetailsRelation;
-import com.cabral.myfirstmvvm.responses.ApiResponse;
 import com.cabral.myfirstmvvm.responses.UserDetails;
 import com.cabral.myfirstmvvm.responses.UserPost;
 import com.cabral.myfirstmvvm.network.db.RoomDb;
@@ -33,6 +34,7 @@ import retrofit2.Response;
 public class UsersDataRepository {
     private static final String TAG = "UsersDataRepository";
     private static UsersDataRepository ourInstance;
+    private RoomDb dbInstance;
     private  final UserDao mUserDao;
     private  final UserCompanyDao mUserCompanyDao;
     private  final UserAddressDao mUserAddressDao;
@@ -43,10 +45,12 @@ public class UsersDataRepository {
     private MutableLiveData<List<UserPost>> mutableLiveUserPosts= new MutableLiveData<>();
 
     private UsersDataRepository(Context context) {
+        dbInstance=RoomDb.getDatabase(context);
         mUserDao= RoomDb.getDatabase(context).userDao();
         mUserAddressDao=RoomDb.getDatabase(context).userAddressDao();
         mUserCompanyDao=RoomDb.getDatabase(context).userCompanyDao();
         mUserPostDao= RoomDb.getDatabase(context).userPostDao();
+
     }
 
     public static UsersDataRepository getInstance(Context context){
@@ -100,9 +104,7 @@ public class UsersDataRepository {
                            user.getCompany().getBs()
                    );
 
-                   mUserDao.insertUser(user1);
-                   mUserAddressDao.insertUserAddress(address1);
-                   mUserCompanyDao.insertUserCompany(company1);
+                   insertUserData(user1,address1,company1);
                    //mUserDao.insertUser(user);
                }
            }
@@ -115,43 +117,12 @@ public class UsersDataRepository {
            @NonNull
            @Override
            protected LiveData<List<UserDetails>> loadFromDb() {
-               MutableLiveData<List<UserDetails>> mUser= new MutableLiveData<List<UserDetails>>();
-               List<UserDetails> results=new ArrayList<>();
+
                LiveData<List<UserDetailsRelation>> userList=mUserDao.getUsers();
 
-               if(userList.getValue()!=null)
-               for (UserDetailsRelation userDetails :userList.getValue()) {
-                   UserDetails.LatLng latLng= new UserDetails.LatLng(
-                           userDetails.userWithAddress.address.getLat(),
-                           userDetails.userWithAddress.address.getLng()
-                   );
-                   UserDetails.UserCompany company =new UserDetails.UserCompany(
-                           userDetails.company.getName(),
-                           userDetails.company.getCatchPhrase(),
-                           userDetails.company.getBs()
-                   );
+               LiveData<List<UserDetails>> mUsers = Transformations.switchMap(userList, myUserList -> changeUserRelationtoUserObject(myUserList) );
 
-                   UserDetails.UserAddress address=new UserDetails.UserAddress(
-                           userDetails.userWithAddress.address.getStreet(),
-                           userDetails.userWithAddress.address.getSuite(),
-                           userDetails.userWithAddress.address.getCity(),
-                           userDetails.userWithAddress.address.getZipcode(),
-                           latLng
-                   );
-                   results.add(new UserDetails(
-                           userDetails.userWithAddress.user.getId(),
-                           userDetails.userWithAddress.user.getName(),
-                           userDetails.userWithAddress.user.getUsername(),
-                           userDetails.userWithAddress.user.getEmail(),
-                           userDetails.userWithAddress.user.getPhone(),
-                           userDetails.userWithAddress.user.getWebsite(),
-                           address,
-                           company
-                           ));
-               }
-
-               mUser.setValue(results);
-               return mUser;
+               return mUsers;
            }
 
            @NonNull
@@ -164,6 +135,46 @@ public class UsersDataRepository {
 
 
        }.getAsLiveData();
+    }
+
+    private LiveData<List<UserDetails>> changeUserRelationtoUserObject(List<UserDetailsRelation> myUserList) {
+            MutableLiveData<List<UserDetails>> results= new MutableLiveData<List<UserDetails>>();
+            List<UserDetails> userDetailsList= new ArrayList<>();
+        for (UserDetailsRelation userDetails :myUserList) {
+                UserDetails.LatLng latLng= new UserDetails.LatLng(
+                        userDetails.userWithAddress.address.getLat(),
+                        userDetails.userWithAddress.address.getLng()
+                );
+                UserDetails.UserCompany company =new UserDetails.UserCompany(
+                        userDetails.company.getName(),
+                        userDetails.company.getCatchPhrase(),
+                        userDetails.company.getBs()
+                );
+
+                UserDetails.UserAddress address=new UserDetails.UserAddress(
+                        userDetails.userWithAddress.address.getStreet(),
+                        userDetails.userWithAddress.address.getSuite(),
+                        userDetails.userWithAddress.address.getCity(),
+                        userDetails.userWithAddress.address.getZipcode(),
+                        latLng
+                );
+            userDetailsList.add(new UserDetails(
+                        userDetails.userWithAddress.user.getId(),
+                        userDetails.userWithAddress.user.getName(),
+                        userDetails.userWithAddress.user.getUsername(),
+                        userDetails.userWithAddress.user.getEmail(),
+                        userDetails.userWithAddress.user.getPhone(),
+                        userDetails.userWithAddress.user.getWebsite(),
+                        address,
+                        company
+                ));
+            }
+        results.setValue(userDetailsList);
+        return  results;
+    }
+
+    private void insertUserData(User user1, Address address1, UserCompany company1) {
+        RoomDb.insertUserData(dbInstance,user1,address1,company1);
     }
 
     public LiveData< UserDetails > getUserDetails(int user_id) {
