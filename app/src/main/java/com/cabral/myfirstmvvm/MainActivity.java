@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void show(UserDetails userDetails) {
         Bundle bundle=new Bundle();
-        bundle.putInt("user_id",userDetails.getUser_id());
+        bundle.putSerializable("userDetails",userDetails);
         navController.navigate(R.id.action_userListFragment_to_userDetailsFragment,bundle);
     }
 

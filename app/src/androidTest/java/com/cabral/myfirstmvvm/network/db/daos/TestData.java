@@ -3,6 +3,7 @@ package com.cabral.myfirstmvvm.network.db.daos;
 import com.cabral.myfirstmvvm.network.db.entities.Address;
 import com.cabral.myfirstmvvm.network.db.entities.User;
 import com.cabral.myfirstmvvm.network.db.entities.UserCompany;
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 
 public class TestData {
    public static User userTestData= new User(6,
@@ -26,4 +27,10 @@ public class TestData {
             "e-enable innovative applications"
     );
 
+    public static UserPostEntity userPostData=new UserPostEntity(
+            3,
+            6,
+            "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+            "et iusto sed quo iure\\nvoluptatem occaecati omnis eligendi aut ad\\nvoluptatem doloribus vel accusantium quis pariatur\\nmolestiae porro eius odio et labore et velit aut"
+            );
 }

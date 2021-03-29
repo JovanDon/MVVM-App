@@ -31,7 +31,6 @@ public class UserViewModel extends AndroidViewModel {
     private final MediatorLiveData<Resource<UserDetails>> mUser=new MediatorLiveData<>();
     private final MediatorLiveData<Resource<List<UserPost>>> mUserPost=new MediatorLiveData<>();
     private int user_id;
-    Context context;
 
     // query extras
     private boolean isQueryExhausted;
@@ -44,8 +43,8 @@ public class UserViewModel extends AndroidViewModel {
         super(application);
         mRepository = UsersDataRepository.getInstance(application.getApplicationContext());
         this.user_id=user_id;
-        executeFetchUserDetails();
-        executeFetchUserPosts();
+
+        getUserPostData(0);
     }
 
     public LiveData<UserDetails> getUserDetails() {
@@ -111,6 +110,25 @@ public class UserViewModel extends AndroidViewModel {
         });
     }
 
+    public void getUserPostData( int pageNumber){
+        if(!isPerformingQuery){
+            if(pageNumber == 0){
+                pageNumber = 1;
+            }
+            this.pageNumber = pageNumber;
+            isQueryExhausted = false;
+            executeFetchUserPosts();
+            //executeFetchUserDetails();
+        }
+    }
+
+    public void getUsersNextPage(){
+        if(!isQueryExhausted && !isPerformingQuery){
+            pageNumber++;
+            executeFetchUserPosts();
+        }
+    }
+
 
 
     private void executeFetchUserPosts(){
@@ -171,18 +189,18 @@ public class UserViewModel extends AndroidViewModel {
         @NonNull
         private final Application mApplication;
 
-        private final int mUserId;
+        private final UserDetails mUser;
 
-        public Factory(@NonNull Application application, int userId) {
+        public Factory(@NonNull Application application, UserDetails user) {
             mApplication = application;
-            mUserId = userId;
+            mUser = user;
         }
 
         @SuppressWarnings("unchecked")
         @Override
         @NonNull
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new UserViewModel(mApplication, mUserId);
+            return (T) new UserViewModel(mApplication, mUser.getUser_id());
         }
 
     }

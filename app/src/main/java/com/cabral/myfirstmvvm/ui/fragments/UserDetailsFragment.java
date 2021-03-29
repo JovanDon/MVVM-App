@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.cabral.myfirstmvvm.MainActivity;
 import com.cabral.myfirstmvvm.R;
 import com.cabral.myfirstmvvm.databinding.FragmentUserDetailsBinding;
+import com.cabral.myfirstmvvm.responses.UserDetails;
 import com.cabral.myfirstmvvm.responses.UserPost;
 import com.cabral.myfirstmvvm.ui.adapters.UserPostAdapter;
 import com.cabral.myfirstmvvm.ui.callbacks.PostClickCallback;
@@ -30,7 +31,7 @@ public class UserDetailsFragment extends Fragment {
 
     private FragmentUserDetailsBinding mBinding;
     private UserPostAdapter mUserPostAdapter;
-    private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_USER_ID = "userDetails";
 
 
 
@@ -64,17 +65,17 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        UserDetails userDetails=(UserDetails) requireArguments().getSerializable(KEY_USER_ID);
         UserViewModel.Factory factory=new UserViewModel.Factory(
                 requireActivity().getApplication(),
-                requireArguments().getInt(KEY_USER_ID)
+                userDetails
         );
 
         UserViewModel userViewModel= new ViewModelProvider(this,factory).get(UserViewModel.class);
 
         mBinding.setIsLoading(true);
-        mBinding.setUserViewModel(userViewModel);
         subscribeUi(userViewModel.getmUserPost());
+        mBinding.setUserDetals(userDetails);
     }
 
     private void subscribeUi(LiveData<Resource<List<UserPost>>> liveData) {

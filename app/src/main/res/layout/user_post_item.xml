@@ -19,7 +19,7 @@
         android:layout_marginEnd="@dimen/item_horizontal_margin"
         android:layout_marginTop="10dp"
         app:cardBackgroundColor="#f3f2f2"
-        app:cardUseCompatPadding="true">
+        android:padding="5dp">
 
         <RelativeLayout
             android:layout_marginStart="@dimen/item_horizontal_margin"

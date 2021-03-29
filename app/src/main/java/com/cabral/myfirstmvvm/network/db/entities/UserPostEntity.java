@@ -29,9 +29,6 @@ public class UserPostEntity {
         this.id = id;
     }
 
-    public int getUser_id() {
-        return userId;
-    }
 
     public void setUser_id(int user_id) {
         this.userId = user_id;

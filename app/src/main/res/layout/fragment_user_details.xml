@@ -14,8 +14,8 @@
             type="boolean" />
 
         <variable
-            name="userViewModel"
-            type="com.cabral.myfirstmvvm.viewmodels.UserViewModel"/>
+            name="userDetals"
+            type="com.cabral.myfirstmvvm.responses.UserDetails"/>
     </data>
 
     <LinearLayout
@@ -37,7 +37,7 @@
 
         <include
             layout="@layout/user_item_layout"
-            app:userDetails="@{userViewModel.userDetails}"
+            app:userDetails="@{userDetals}"
             />
 
         <FrameLayout
@@ -48,7 +48,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/loading_comments_tv"
                 android:text="@string/loading_Posts"
                 app:visibleGone="@{isLoading}"/>
 
@@ -63,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layoutManager="LinearLayoutManager"
-                    app:visibleGone="@{!isLoading}"/>
+                    />
             </FrameLayout>
         </FrameLayout>
 
