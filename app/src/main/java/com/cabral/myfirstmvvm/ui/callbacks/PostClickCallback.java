@@ -1,8 +1,8 @@
 package com.cabral.myfirstmvvm.ui.callbacks;
 
 
-import com.cabral.myfirstmvvm.responses.UserPost;
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 
 public interface PostClickCallback {
-     void onClick(UserPost userPost);
+     void onClick(UserPostEntity userPost);
 }

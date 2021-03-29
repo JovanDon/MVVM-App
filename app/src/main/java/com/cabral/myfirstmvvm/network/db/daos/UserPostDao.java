@@ -13,9 +13,12 @@ import java.util.List;
 @Dao
 public interface UserPostDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(UserPostEntity userPost);
+    void insert(UserPostEntity UserPostEntity);
 
 
     @Query("SELECT user_posts.* FROM user_posts WHERE user_posts.userId=:user_id")
     LiveData<List<UserPostEntity>> getPosts(int user_id);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<UserPostEntity> postsList);
 }

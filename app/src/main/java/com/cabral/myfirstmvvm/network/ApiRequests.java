@@ -1,9 +1,8 @@
 package com.cabral.myfirstmvvm.network;
 
-import com.cabral.myfirstmvvm.responses.ApiResponse;
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 import com.cabral.myfirstmvvm.responses.PostComments;
 import com.cabral.myfirstmvvm.responses.UserDetails;
-import com.cabral.myfirstmvvm.responses.UserPost;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public interface ApiRequests {
 
     // //get userPosts
     @GET("posts")
-    Call<List<UserPost>> getPosts(@Query("userId") int userId);
+    Call<List<UserPostEntity>> getPosts(@Query("userId") int userId);
 
     // //get users Details
     @GET("users/{id}")

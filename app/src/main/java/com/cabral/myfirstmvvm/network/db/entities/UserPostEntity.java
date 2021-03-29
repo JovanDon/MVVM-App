@@ -1,10 +1,13 @@
 package com.cabral.myfirstmvvm.network.db.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "user_posts")
-public class UserPostEntity {
+public class UserPostEntity implements Parcelable {
     @PrimaryKey
     private int id;
 
@@ -20,6 +23,25 @@ public class UserPostEntity {
         this.title = title;
         this.body = body;
     }
+
+    protected UserPostEntity(Parcel in) {
+        id = in.readInt();
+        userId = in.readInt();
+        title = in.readString();
+        body = in.readString();
+    }
+
+    public static final Creator<UserPostEntity> CREATOR = new Creator<UserPostEntity>() {
+        @Override
+        public UserPostEntity createFromParcel(Parcel in) {
+            return new UserPostEntity(in);
+        }
+
+        @Override
+        public UserPostEntity[] newArray(int size) {
+            return new UserPostEntity[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -54,8 +76,17 @@ public class UserPostEntity {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(userId);
+        dest.writeString(title);
+        dest.writeString(body);
+    }
 }

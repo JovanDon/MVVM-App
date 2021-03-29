@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 import com.cabral.myfirstmvvm.responses.UserDetails;
-import com.cabral.myfirstmvvm.responses.UserPost;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;
@@ -25,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void showPostComments(UserPost userPosts) {
+
+    public void showPostComments(UserPostEntity userPosts) {
 
         navController.navigate(R.id.action_userDetailsFragment_to_userListFragment);
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public void show(UserDetails userDetails) {
         Bundle bundle=new Bundle();
         bundle.putSerializable("userDetails",userDetails);
+
         navController.navigate(R.id.action_userListFragment_to_userDetailsFragment,bundle);
     }
 

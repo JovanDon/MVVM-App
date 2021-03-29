@@ -12,14 +12,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cabral.myfirstmvvm.MainActivity;
 import com.cabral.myfirstmvvm.R;
 import com.cabral.myfirstmvvm.databinding.FragmentUserDetailsBinding;
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 import com.cabral.myfirstmvvm.responses.UserDetails;
-import com.cabral.myfirstmvvm.responses.UserPost;
 import com.cabral.myfirstmvvm.ui.adapters.UserPostAdapter;
 import com.cabral.myfirstmvvm.ui.callbacks.PostClickCallback;
 import com.cabral.myfirstmvvm.util.Resource;
@@ -31,7 +34,7 @@ public class UserDetailsFragment extends Fragment {
 
     private FragmentUserDetailsBinding mBinding;
     private UserPostAdapter mUserPostAdapter;
-    private static final String KEY_USER_ID = "userDetails";
+    private static final String KEY_USER = "userDetails";
 
 
 
@@ -53,8 +56,17 @@ public class UserDetailsFragment extends Fragment {
         //mBinding.toolbar.setBackgroundColor(getResources().getColor(R.color.white));
         mBinding.toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.back_arrow));
 
+
         ((AppCompatActivity)getActivity()).setSupportActionBar(mBinding.toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+
+
+        mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -65,7 +77,8 @@ public class UserDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        UserDetails userDetails=(UserDetails) requireArguments().getSerializable(KEY_USER_ID);
+        UserDetails userDetails=(UserDetails) requireArguments().getSerializable(KEY_USER);
+
         UserViewModel.Factory factory=new UserViewModel.Factory(
                 requireActivity().getApplication(),
                 userDetails
@@ -78,7 +91,7 @@ public class UserDetailsFragment extends Fragment {
         mBinding.setUserDetals(userDetails);
     }
 
-    private void subscribeUi(LiveData<Resource<List<UserPost>>> liveData) {
+    private void subscribeUi(LiveData<Resource<List<UserPostEntity>>> liveData) {
         // Update the list when the data changes
         liveData.observe(getViewLifecycleOwner(), myPosts -> {
             if (myPosts.data != null) {
@@ -98,6 +111,8 @@ public class UserDetailsFragment extends Fragment {
              ((MainActivity) requireActivity()).showPostComments(userPosts);
         }
     };
+
+
 
 
 }

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="userPost"
-            type="com.cabral.myfirstmvvm.responses.UserPost"/>
+            type="com.cabral.myfirstmvvm.network.db.entities.UserPostEntity"/>
         <variable name="callback"
             type="com.cabral.myfirstmvvm.ui.callbacks.PostClickCallback"/>
     </data>

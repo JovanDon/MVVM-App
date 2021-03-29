@@ -1,7 +1,6 @@
 package com.cabral.myfirstmvvm.viewmodels;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,8 +13,8 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 import com.cabral.myfirstmvvm.responses.UserDetails;
-import com.cabral.myfirstmvvm.responses.UserPost;
 import com.cabral.myfirstmvvm.network.UsersDataRepository;
 import com.cabral.myfirstmvvm.util.Resource;
 
@@ -29,7 +28,7 @@ public class UserViewModel extends AndroidViewModel {
 
     private final UsersDataRepository mRepository;
     private final MediatorLiveData<Resource<UserDetails>> mUser=new MediatorLiveData<>();
-    private final MediatorLiveData<Resource<List<UserPost>>> mUserPost=new MediatorLiveData<>();
+    private final MediatorLiveData<Resource<List<UserPostEntity>>> mUserPost=new MediatorLiveData<>();
     private int user_id;
 
     // query extras
@@ -58,57 +57,10 @@ public class UserViewModel extends AndroidViewModel {
         return userDetailsMutableLiveData;
     }
 
-    public LiveData<Resource<List<UserPost>>> getmUserPost() {
+    public LiveData<Resource<List<UserPostEntity>>> getmUserPost() {
         return mUserPost;
     }
 
-    private void executeFetchUserDetails(){
-        requestStartTime = System.currentTimeMillis();
-        cancelRequest = false;
-        isPerformingQuery = true;
-        final LiveData<Resource<UserDetails>> repositorySource=mRepository.getUserDetails(user_id);
-
-        mUser.addSource(repositorySource, new Observer<Resource<UserDetails>>() {
-            @Override
-            public void onChanged(Resource<UserDetails> userDetailsResource) {
-
-                if(!cancelRequest){
-                    if(userDetailsResource!=null){
-
-                        if(userDetailsResource.status == Resource.Status.SUCCESS){
-                            Log.d(TAG, "onChanged: REQUEST TIME: " + (System.currentTimeMillis() - requestStartTime) / 1000 + " seconds.");
-                            Log.d(TAG, "onChanged: page number: " + pageNumber);
-                            Log.d(TAG, "onChanged: " + userDetailsResource.data);
-                            isPerformingQuery=false;
-                            if(userDetailsResource.data!=null){
-                                mUser.setValue( new Resource<>(
-                                        Resource.Status.SUCCESS,
-                                        userDetailsResource.data,
-                                        QUERY_EXHAUSTED
-                                ));
-                            }
-                            mUser.removeSource(repositorySource);
-                        }
-                        else if(userDetailsResource.status== Resource.Status.ERROR) {
-                            Log.d(TAG, "onChanged: REQUEST TIME: " + (System.currentTimeMillis() - requestStartTime) / 1000 + " seconds.");
-                            isPerformingQuery = false;
-                            if (userDetailsResource.message.equals(QUERY_EXHAUSTED)) {
-                                isQueryExhausted = true;
-                            }
-                            mUser.removeSource(repositorySource);
-                        }
-                        mUser.setValue(userDetailsResource);
-                    }
-                    else {
-                        mUser.removeSource(repositorySource);
-                    }
-                }else{
-                    mUser.removeSource(repositorySource);
-                }
-
-            }
-        });
-    }
 
     public void getUserPostData( int pageNumber){
         if(!isPerformingQuery){
@@ -135,11 +87,11 @@ public class UserViewModel extends AndroidViewModel {
         requestStartTime = System.currentTimeMillis();
         cancelRequest = false;
         isPerformingQuery = true;
-        final LiveData<Resource<List<UserPost>>> repositorySource=mRepository.getUserPosts(user_id);
+        final LiveData<Resource<List<UserPostEntity>>> repositorySource=mRepository.getUserPosts(user_id);
 
-        mUserPost.addSource(repositorySource, new Observer<Resource<List<UserPost>>>() {
+        mUserPost.addSource(repositorySource, new Observer<Resource<List<UserPostEntity>>>() {
             @Override
-            public void onChanged(Resource<List<UserPost>> listResource) {
+            public void onChanged(Resource<List<UserPostEntity>> listResource) {
 
                 if(!cancelRequest){
                     if(listResource!=null){

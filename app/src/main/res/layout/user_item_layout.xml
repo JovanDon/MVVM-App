@@ -14,109 +14,110 @@
         android:layout_height="wrap_content">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/loading_comments_tv"
+        android:textSize="20dp"
         android:text="@string/loading_user_details"
         app:visibleGone="@{userDetails.name==null}"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/UserCard_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/user_item_min_height"
-        android:onClick="@{() ->  callback.onClick(userDetails)}"
-        android:orientation="horizontal"
-        android:layout_marginStart="@dimen/item_horizontal_margin"
-        android:layout_marginEnd="@dimen/item_horizontal_margin"
-        android:layout_marginTop="10dp"
-        app:cardBackgroundColor="#f3f2f2"
-        android:padding="10dp"
-        app:visibleGone="@{userDetails.name!=null}">
-
-        <RelativeLayout
-            android:layout_marginStart="@dimen/item_horizontal_margin"
-            android:layout_marginEnd="@dimen/item_horizontal_margin"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/UserCard_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_horizontal_margin"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/item_horizontal_margin"
+            android:minHeight="@dimen/user_item_min_height"
+            android:onClick="@{() ->  callback.onClick(userDetails)}"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:cardBackgroundColor="#f3f2f2"
+            app:visibleGone="@{userDetails.name!=null}">
 
-            <LinearLayout
-                android:id="@+id/title_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/cd_user_name"
-                    android:textColor="#4267B2"
-                    android:textSize="25sp"
-                    android:text="@{userDetails.name}"/>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/body_layout"
-                android:layout_below="@+id/title_layout"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="@dimen/item_horizontal_margin"
+                android:layout_marginEnd="@dimen/item_horizontal_margin">
 
                 <LinearLayout
+                    android:id="@+id/title_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@{userDetails.email}"
-                        android:textColor="#0A0708"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginRight="5dp"/>
-
-
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/phone"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#0A0708"
-                        android:text="@{userDetails.phone}"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginRight="5dp"/>
+                        android:contentDescription="@string/cd_user_name"
+                        android:text="@{userDetails.name}"
+                        android:textColor="#4267B2"
+                        android:textSize="25sp" />
+
 
                 </LinearLayout>
 
 
                 <LinearLayout
+                    android:id="@+id/body_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-                    <TextView
-                        android:id="@+id/address"
-                        android:layout_weight="1.2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@{@string/address(userDetails.address.city,userDetails.address.street,userDetails.address.suite)}"
-                        android:textColor="#0A0708"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginRight="5dp"/>
+                    android:layout_below="@+id/title_layout"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:text="@{userDetails.email}"
+                            android:textColor="#0A0708" />
+
+
+                        <TextView
+                            android:id="@+id/phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:text="@{userDetails.phone}"
+                            android:textColor="#0A0708" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1.2"
+                            android:text="@{@string/address(userDetails.address.city,userDetails.address.street,userDetails.address.suite)}"
+                            android:textColor="#0A0708" />
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
 
+            </RelativeLayout>
 
-
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </FrameLayout>
 

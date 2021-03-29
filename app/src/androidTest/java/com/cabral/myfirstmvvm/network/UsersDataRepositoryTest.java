@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 import com.cabral.myfirstmvvm.responses.UserDetails;
-import com.cabral.myfirstmvvm.responses.UserPost;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,7 +21,7 @@ public class UsersDataRepositoryTest {
 
     private MutableLiveData<List<UserDetails>> mutableLiveUserData= new MutableLiveData<>();
     private MutableLiveData<UserDetails> mutableLiveUserDetails= new MutableLiveData<>();
-    private MutableLiveData<List<UserPost>> mutableLiveUserPosts= new MutableLiveData<>();
+    private MutableLiveData<List<UserPostEntity>> mutableLiveUserPosts= new MutableLiveData<>();
 
    @Before
    public void init(){

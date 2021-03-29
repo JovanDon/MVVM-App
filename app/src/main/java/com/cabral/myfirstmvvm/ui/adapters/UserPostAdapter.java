@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.myfirstmvvm.R;
 import com.cabral.myfirstmvvm.databinding.UserPostItemBinding;
-import com.cabral.myfirstmvvm.responses.UserPost;
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 import com.cabral.myfirstmvvm.ui.callbacks.PostClickCallback;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPostHolder> {
 
     private final PostClickCallback mPostClickCallback;
-    List<? extends UserPost> mUserPosts;
+    List<? extends UserPostEntity> mUserPosts;
 
     public UserPostAdapter(@Nullable PostClickCallback mPostClickCallback) {
         this.mPostClickCallback = mPostClickCallback;
@@ -42,7 +42,7 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
         holder.binding.setUserPost(mUserPosts.get(position));
         holder.binding.executePendingBindings();
     }
-    public void setPostList( List<? extends UserPost> postList){
+    public void setPostList( List<? extends UserPostEntity> postList){
         if(mUserPosts==null){
             mUserPosts=postList;
             notifyItemRangeInserted(0,mUserPosts.size());
@@ -60,15 +60,14 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return postList.get(newItemPosition).getUser_id()==mUserPosts.get(oldItemPosition).getUser_id();
+                    return postList.get(newItemPosition).getId()==mUserPosts.get(oldItemPosition).getId();
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    UserPost oldUser=mUserPosts.get(oldItemPosition);
-                    UserPost newUser=postList.get(newItemPosition);
-                    return oldUser.getUser_id() == newUser.getUser_id()
-                            && TextUtils.equals(oldUser.getId()+"",newUser.getId()+"")
+                    UserPostEntity oldUser=mUserPosts.get(oldItemPosition);
+                    UserPostEntity newUser=postList.get(newItemPosition);
+                    return oldUser.getId() == newUser.getId()
                             && TextUtils.equals(oldUser.getTitle(),newUser.getTitle())
                             && TextUtils.equals(oldUser.getBody(),newUser.getBody());
                 }
