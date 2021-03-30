@@ -10,7 +10,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 
-import com.cabral.myfirstmvvm.responses.ApiResponse;
 import com.cabral.myfirstmvvm.responses.UserDetails;
 import com.cabral.myfirstmvvm.network.UsersDataRepository;
 import com.cabral.myfirstmvvm.util.Resource;

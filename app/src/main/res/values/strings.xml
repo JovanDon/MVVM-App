@@ -14,4 +14,5 @@
     <string name="cd_posts_list">Lists Of User Posts</string>
     <string name="user_details">User Details</string>
     <string name="loading_user_details">Loading User Details ...</string>
+    <string name="post_deatils">Post Details</string>
 </resources>

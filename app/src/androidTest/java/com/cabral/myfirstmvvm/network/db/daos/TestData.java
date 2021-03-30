@@ -1,6 +1,7 @@
 package com.cabral.myfirstmvvm.network.db.daos;
 
 import com.cabral.myfirstmvvm.network.db.entities.Address;
+import com.cabral.myfirstmvvm.network.db.entities.PostComment;
 import com.cabral.myfirstmvvm.network.db.entities.User;
 import com.cabral.myfirstmvvm.network.db.entities.UserCompany;
 import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
@@ -32,5 +33,13 @@ public class TestData {
             6,
             "ea molestias quasi exercitationem repellat qui ipsa sit aut",
             "et iusto sed quo iure\\nvoluptatem occaecati omnis eligendi aut ad\\nvoluptatem doloribus vel accusantium quis pariatur\\nmolestiae porro eius odio et labore et velit aut"
-            );
+    );
+
+    public static PostComment postCommentData=new PostComment(
+            11,
+            3,
+            "fugit labore quia mollitia quas deserunt nostrum sunt",
+            "Veronica_Goodwin@timmothy.net",
+            "ut dolorum nostrum id quia aut est\nfuga est inventore vel eligendi explicabo quis consectetur\naut occaecati repellat id natus quo est\nut blanditiis quia ut vel ut maiores ea"
+    );
 }

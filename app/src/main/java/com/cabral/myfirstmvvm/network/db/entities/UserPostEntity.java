@@ -6,8 +6,10 @@ import android.os.Parcelable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "user_posts")
-public class UserPostEntity implements Parcelable {
+public class UserPostEntity implements Parcelable, Serializable {
     @PrimaryKey
     private int id;
 

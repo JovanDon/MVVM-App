@@ -27,13 +27,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void showPostComments(UserPostEntity userPosts) {
-
-        navController.navigate(R.id.action_userDetailsFragment_to_userListFragment);
+    public void showPostComments(UserPostEntity userPost) {
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("postDetails",userPost);
+        navController.navigate(R.id.action_userDetailsFragment_to_commentDetailsFragment,bundle);
 
     }
 
     public void show(UserDetails userDetails) {
+
         Bundle bundle=new Bundle();
         bundle.putSerializable("userDetails",userDetails);
 

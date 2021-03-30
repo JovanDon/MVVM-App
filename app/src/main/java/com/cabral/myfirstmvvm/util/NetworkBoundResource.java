@@ -1,27 +1,13 @@
 package com.cabral.myfirstmvvm.util;
 
-import android.util.Log;
-
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Observer;
 
-import com.cabral.myfirstmvvm.AppExecutors;
-import com.cabral.myfirstmvvm.responses.ApiResponse;
-import com.cabral.myfirstmvvm.responses.UserDetails;
-
-import java.util.List;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import android.os.AsyncTask;
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
 
 import retrofit2.Call;
 import retrofit2.Callback;

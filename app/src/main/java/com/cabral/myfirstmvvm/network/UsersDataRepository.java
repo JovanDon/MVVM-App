@@ -9,9 +9,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.cabral.myfirstmvvm.network.db.daos.PostCommentDao;
 import com.cabral.myfirstmvvm.network.db.daos.UserAddressDao;
 import com.cabral.myfirstmvvm.network.db.daos.UserCompanyDao;
 import com.cabral.myfirstmvvm.network.db.entities.Address;
+import com.cabral.myfirstmvvm.network.db.entities.PostComment;
 import com.cabral.myfirstmvvm.network.db.entities.User;
 import com.cabral.myfirstmvvm.network.db.entities.UserCompany;
 import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
@@ -35,19 +37,17 @@ public class UsersDataRepository {
     private static UsersDataRepository ourInstance;
     private RoomDb dbInstance;
     private  final UserDao mUserDao;
-    private  final UserCompanyDao mUserCompanyDao;
-    private  final UserAddressDao mUserAddressDao;
     private  final UserPostDao mUserPostDao;
+    private  final PostCommentDao mPostCommentDao;
 
     private MutableLiveData<List<UserDetails>> mutableLiveUserData= new MutableLiveData<>();
+    private MutableLiveData<PostComment> mutableLivePostCommentData= new MutableLiveData<>();
 
     private UsersDataRepository(Context context) {
         dbInstance=RoomDb.getDatabase(context);
         mUserDao= RoomDb.getDatabase(context).userDao();
-        mUserAddressDao=RoomDb.getDatabase(context).userAddressDao();
-        mUserCompanyDao=RoomDb.getDatabase(context).userCompanyDao();
         mUserPostDao= RoomDb.getDatabase(context).userPostDao();
-
+        mPostCommentDao= RoomDb.getDatabase(context).postCommentDao();
     }
 
     public static UsersDataRepository getInstance(Context context){
@@ -180,6 +180,56 @@ public class UsersDataRepository {
             @Override
             protected Call<List<UserPostEntity>> createCall() {
                 Call<List<UserPostEntity>> call = ApiClient.getInstance().getPosts(user_id);
+                return call;
+            }
+        }.getAsLiveData();
+
+    }
+
+    public LiveData<PostComment> submitPostComment(PostComment postComment){
+        Call<PostComment> call = ApiClient.getInstance().submitPostComment(postComment);
+
+        call.enqueue(new Callback<PostComment>() {
+            @Override
+            public void onResponse(Call<PostComment> call, Response<PostComment> response) {
+
+                mutableLivePostCommentData.setValue( response.body());
+            }
+
+            @Override
+            public void onFailure(Call<PostComment> call, Throwable t) {
+                Log.d(TAG, "onFailure: failed to fetch user list from server"+t.getMessage());
+            }
+        });
+        return mutableLivePostCommentData;
+    }
+
+    public LiveData<Resource<List<PostComment>>> getPostComment(int post_id) {
+
+
+        return new NetworkBoundResource<List<PostComment>, List<PostComment>>() {
+            @Override
+            protected void saveCallResult(@NonNull List<PostComment> itemList) {
+                mPostCommentDao.insertAll( itemList);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<List<PostComment>> loadFromDb() {
+                LiveData<List<PostComment>> postComments=mPostCommentDao.getPostComments(post_id);
+
+                return postComments;
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<PostComment> data) {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected Call<List<PostComment>> createCall() {
+                Call<List<PostComment>> call = ApiClient.getInstance().getPostComments(post_id);
                 return call;
             }
         }.getAsLiveData();

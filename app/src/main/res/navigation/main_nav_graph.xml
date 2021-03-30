@@ -10,7 +10,9 @@
         android:label="UserListFragment" >
         <action
             android:id="@+id/action_userListFragment_to_userDetailsFragment"
-            app:destination="@id/userDetailsFragment" />
+            app:destination="@id/userDetailsFragment"
+            app:popUpTo="@id/userListFragment"
+             />
     </fragment>
     <fragment
         android:id="@+id/userDetailsFragment"
@@ -19,5 +21,17 @@
         <action
             android:id="@+id/action_userDetailsFragment_to_userListFragment"
             app:destination="@id/userListFragment" />
+        <action
+            android:id="@+id/action_userDetailsFragment_to_commentDetailsFragment"
+            app:destination="@id/commentDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentDetailsFragment"
+        android:name="com.cabral.myfirstmvvm.ui.fragments.CommentDetailsFragment"
+        android:label="CommentDetailsFragment" >
+        <action
+            android:id="@+id/action_commentDetailsFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment"
+            app:popUpTo="@id/userDetailsFragment" />
     </fragment>
 </navigation>

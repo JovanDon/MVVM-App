@@ -46,7 +46,8 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
         if(mUserPosts==null){
             mUserPosts=postList;
             notifyItemRangeInserted(0,mUserPosts.size());
-        }else{
+        }
+        else{
             DiffUtil.DiffResult results=DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
