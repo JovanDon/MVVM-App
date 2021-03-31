@@ -71,7 +71,7 @@ public class CommentDetailsFragment extends Fragment {
         UserPostEntity userPostDetails=(UserPostEntity) requireArguments().getSerializable(KEY_DETAILS);
         PostCommentViewModel.Factory factory= new PostCommentViewModel.Factory(
                 requireActivity().getApplication(),
-                userPostDetails.getId()
+                userPostDetails
         );
 
         PostCommentViewModel viewModel= new ViewModelProvider(this,factory).get(PostCommentViewModel.class);

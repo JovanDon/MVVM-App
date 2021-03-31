@@ -18,15 +18,15 @@ import java.util.List;
 
 public class PostCommentsAdapter extends RecyclerView.Adapter<PostCommentsAdapter.PostCommentHolder> {
 
-    List<? extends PostComment> mComments=new ArrayList<>();
+    List<? extends PostComment> mComments;
 
     public PostCommentsAdapter() {
         setHasStableIds(true);
     }
 
-    public void  setComments(List<? extends PostComment> mComments){
+    public void  setComments(List<? extends PostComment> commentList){
         if(mComments==null){
-            this.mComments=mComments;
+            this.mComments=commentList;
             notifyItemRangeInserted(0,mComments.size());
         }
         else{
@@ -77,7 +77,7 @@ public class PostCommentsAdapter extends RecyclerView.Adapter<PostCommentsAdapte
 
     @Override
     public int getItemCount() {
-        return this.mComments.size();
+        return mComments==null? 0 : mComments.size();
     }
 
     static class PostCommentHolder extends RecyclerView.ViewHolder {

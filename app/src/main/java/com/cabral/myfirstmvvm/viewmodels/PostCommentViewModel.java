@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.cabral.myfirstmvvm.network.UsersDataRepository;
 import com.cabral.myfirstmvvm.network.db.entities.PostComment;
-import com.cabral.myfirstmvvm.responses.UserDetails;
+import com.cabral.myfirstmvvm.network.db.entities.UserPostEntity;
 import com.cabral.myfirstmvvm.util.Resource;
 
 import java.util.List;
@@ -37,7 +37,6 @@ public class PostCommentViewModel extends AndroidViewModel {
 
     public PostCommentViewModel(@NonNull Application application, int post_id) {
         super(application);
-
         mRepository = UsersDataRepository.getInstance(application.getApplicationContext());
         this.post_id=post_id;
         getUserCommentData(0);
@@ -113,7 +112,7 @@ public class PostCommentViewModel extends AndroidViewModel {
     }
 
     public LiveData<Resource<List<PostComment>>> getComments() {
-        return postComments;
+        return this.postComments;
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
@@ -123,9 +122,9 @@ public class PostCommentViewModel extends AndroidViewModel {
 
         private final int post_id;
 
-        public Factory(@NonNull Application application, int post_id) {
+        public Factory(@NonNull Application application, UserPostEntity post) {
             mApplication = application;
-            this.post_id = post_id;
+            this.post_id = post.getId();
         }
 
         @SuppressWarnings("unchecked")
