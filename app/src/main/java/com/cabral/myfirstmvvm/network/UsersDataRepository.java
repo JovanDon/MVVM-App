@@ -161,6 +161,26 @@ public class UsersDataRepository {
             @Override
             protected void saveCallResult(@NonNull List<UserPostEntity> itemList) {
                 mUserPostDao.insertAll( itemList);
+
+                for (UserPostEntity postEntity:itemList) {//save all corespondingTasks
+                    Call<List<PostComment>> call = ApiClient.getInstance().getPostComments(postEntity.getId());
+                    call.enqueue(new Callback<List<PostComment>>() {
+                        @Override
+                        public void onResponse(Call<List<PostComment>> call, Response<List<PostComment>> response) {
+
+                            (new CommentSaverTask(response.body())).execute();
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<PostComment>> call, Throwable t) {
+                            Log.e("Failure","Failed getting corresponding posts for User");
+
+                        }
+                    });
+                }
+
+
             }
 
             @NonNull
@@ -299,6 +319,29 @@ public class UsersDataRepository {
         }
     }
 
+    private class CommentSaverTask extends AsyncTask<String, Void, Void> {
+        List<PostComment> commentList;
 
+        public CommentSaverTask(List<PostComment> comments) {
+            this.commentList=comments;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            mPostCommentDao.insertAll( this.commentList );
+            return  null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
+        }
+    }
 
 }

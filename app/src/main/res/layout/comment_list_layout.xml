@@ -40,32 +40,82 @@
             app:userPost="@{userPost}"
             />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp">
-
-            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/loading_Posts"
-                app:visibleGone="@{isLoading}"/>
+                android:layout_height="0dp"
+                android:layout_weight = "7"
+                android:layout_marginLeft="15dp">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/post_list_wrapper">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/comment_list"
-                    android:contentDescription="@string/cd_posts_list"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layoutManager="LinearLayoutManager"
-                    />
-            </FrameLayout>
-        </FrameLayout>
+                    android:text="@string/loading_Posts"
+                    app:visibleGone="@{isLoading}"/>
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/post_list_wrapper">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/comment_list"
+                        android:contentDescription="@string/cd_posts_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="LinearLayoutManager"
+                        />
+
+                </FrameLayout>
+            </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight ="3"
+            android:layout_gravity="bottom"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/comment_name"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/edittext_corner"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                />
+
+            <EditText
+                android:id="@+id/new_comment"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/edittext_corner"
+                android:layout_height="60dp"
+                />
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_margin="5dp"
+                android:background="@drawable/round_button_dark_blue"
+                android:text="Send"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
     </LinearLayout>
 </layout>
