@@ -36,7 +36,7 @@ public class UserListViewModel extends AndroidViewModel {
         super(application);
         context=application.getApplicationContext();
         mRepository = UsersDataRepository.getInstance(application.getApplicationContext());
-        mUsers = mRepository.getUserList();
+        mUsers = mRepository.getUserList(1);
         getUsersApi(0);
     }
 
@@ -73,7 +73,7 @@ public class UserListViewModel extends AndroidViewModel {
         requestStartTime = System.currentTimeMillis();
         cancelRequest = false;
         isPerformingQuery = true;
-        final LiveData<Resource<List<UserDetails>>> repositorySource=mRepository.getUsers();
+        final LiveData<Resource<List<UserDetails>>> repositorySource=mRepository.getUsers(pageNumber);
 
         users.addSource(repositorySource, new Observer<Resource<List<UserDetails>>>() {
             @Override

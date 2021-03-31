@@ -110,6 +110,12 @@ public class PostCommentViewModel extends AndroidViewModel {
     public LiveData<PostComment>  submitComment(PostComment postComment){
         return mRepository.submitPostComment(postComment);
     }
+    public LiveData<PostComment>  updatePostComment(PostComment postComment){
+        return mRepository.updatePostComment(postComment);
+    }
+    public LiveData<String>  deletePostComment(PostComment postComment){
+        return mRepository.deletePostComment(postComment);
+    }
 
     public LiveData<Resource<List<PostComment>>> getComments() {
         return this.postComments;

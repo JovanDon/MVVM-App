@@ -1,17 +1,26 @@
 package com.cabral.myfirstmvvm.ui.adapters;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cabral.myfirstmvvm.R;
 import com.cabral.myfirstmvvm.databinding.CommentItemLayoutBinding;
 import com.cabral.myfirstmvvm.network.db.entities.PostComment;
+import com.cabral.myfirstmvvm.ui.fragments.CommentDetailsFragment;
+import com.cabral.myfirstmvvm.util.DialogLoader;
+import com.cabral.myfirstmvvm.viewmodels.PostCommentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +28,12 @@ import java.util.List;
 public class PostCommentsAdapter extends RecyclerView.Adapter<PostCommentsAdapter.PostCommentHolder> {
 
     List<? extends PostComment> mComments;
+    Context context;
+    LifecycleOwner viewLifecycleOwner;
 
-    public PostCommentsAdapter() {
+    public PostCommentsAdapter(Context context, LifecycleOwner viewLifecycleOwner) {
+        this.context=context;
+        this.viewLifecycleOwner=viewLifecycleOwner;
         setHasStableIds(true);
     }
 
@@ -72,7 +85,49 @@ public class PostCommentsAdapter extends RecyclerView.Adapter<PostCommentsAdapte
     @Override
     public void onBindViewHolder(@NonNull PostCommentHolder holder, int position) {
         holder.binding.setComment(mComments.get(position));
+
+
+
+        holder.binding.editComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommentDetailsFragment.newCommentName.setText(mComments.get(position).getName());
+                CommentDetailsFragment.newComment.setText(mComments.get(position).getBody());
+                CommentDetailsFragment.updateMode=true;
+                CommentDetailsFragment.commentToUpdate=mComments.get(position);
+
+
+            }
+        });
+        holder.binding.deleteComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                deleteComment(mComments.get(position));
+            }
+        });
         holder.binding.executePendingBindings();
+    }
+
+
+    private void deleteComment(PostComment postComment) {
+        DialogLoader dialogLoader=new DialogLoader(context);
+        dialogLoader.showProgressDialog();
+
+        LiveData<String> liveData=CommentDetailsFragment.viewModel.deletePostComment(
+                postComment
+        );
+
+        liveData.observe(viewLifecycleOwner, result -> {
+            dialogLoader.hideProgressDialog();
+            if (result != null && result.equalsIgnoreCase("Success") ) {
+                Toast.makeText(context, "Comment Deleted successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+
+
+        });
     }
 
     @Override

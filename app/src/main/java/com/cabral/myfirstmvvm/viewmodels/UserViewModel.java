@@ -87,7 +87,7 @@ public class UserViewModel extends AndroidViewModel {
         requestStartTime = System.currentTimeMillis();
         cancelRequest = false;
         isPerformingQuery = true;
-        final LiveData<Resource<List<UserPostEntity>>> repositorySource=mRepository.getUserPosts(user_id);
+        final LiveData<Resource<List<UserPostEntity>>> repositorySource=mRepository.getUserPosts(user_id,pageNumber);
 
         mUserPost.addSource(repositorySource, new Observer<Resource<List<UserPostEntity>>>() {
             @Override

@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -90,6 +91,17 @@ public class UserDetailsFragment extends Fragment {
         );
 
         UserViewModel userViewModel= new ViewModelProvider(this,factory).get(UserViewModel.class);
+
+        mBinding.postList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(mBinding.postList.canScrollVertically(1)){
+                    userViewModel.getUsersNextPage();
+
+                }
+            }
+        });
 
         mBinding.setIsLoading(true);
         subscribeUi(userViewModel.getmUserPost());

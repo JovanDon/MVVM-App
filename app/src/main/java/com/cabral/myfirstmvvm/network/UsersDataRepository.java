@@ -10,8 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.cabral.myfirstmvvm.network.db.daos.PostCommentDao;
-import com.cabral.myfirstmvvm.network.db.daos.UserAddressDao;
-import com.cabral.myfirstmvvm.network.db.daos.UserCompanyDao;
 import com.cabral.myfirstmvvm.network.db.entities.Address;
 import com.cabral.myfirstmvvm.network.db.entities.PostComment;
 import com.cabral.myfirstmvvm.network.db.entities.User;
@@ -42,6 +40,7 @@ public class UsersDataRepository {
 
     private MutableLiveData<List<UserDetails>> mutableLiveUserData= new MutableLiveData<>();
     private MutableLiveData<PostComment> mutableLivePostCommentData= new MutableLiveData<>();
+    private MutableLiveData<String> mutableLivedeleteResponse= new MutableLiveData<>();
 
     private UsersDataRepository(Context context) {
         dbInstance=RoomDb.getDatabase(context);
@@ -57,8 +56,8 @@ public class UsersDataRepository {
         return ourInstance;
     }
 
-    public LiveData<List<UserDetails>> getUserList(){
-        Call<List<UserDetails>> call =  ApiClient.getInstance().getUsers();
+    public LiveData<List<UserDetails>> getUserList(int pagenumber){
+        Call<List<UserDetails>> call =  ApiClient.getInstance().getUsers(0,pagenumber*10);
         call.enqueue(new Callback<List<UserDetails>>() {
             @Override
             public void onResponse(Call<List<UserDetails>> call, Response<List<UserDetails>> response) {
@@ -74,8 +73,12 @@ public class UsersDataRepository {
         return mutableLiveUserData;
     }
 
-    public LiveData<Resource<List<UserDetails>>>getUsers(){
-       return new NetworkBoundResource<List<UserDetails>, List<UserDetails>>() {
+    public LiveData<Resource<List<UserDetails>>>getUsers(int pageNumber){
+        if(pageNumber==0){
+            pageNumber=1;
+        }
+        int finalPageNumber = pageNumber;
+        return new NetworkBoundResource<List<UserDetails>, List<UserDetails>>() {
 
            @Override
            protected void saveCallResult(@NonNull List<UserDetails> itemList) {
@@ -103,7 +106,7 @@ public class UsersDataRepository {
 
                    insertUserData(user1,address1,company1);
 
-                   Call<List<UserPostEntity>> call = ApiClient.getInstance().getPosts(user.getUser_id());
+                   Call<List<UserPostEntity>> call = ApiClient.getInstance().getPosts(user.getUser_id(),0,10);
                    call.enqueue(new Callback<List<UserPostEntity>>() {
                        @Override
                        public void onResponse(Call<List<UserPostEntity>> call, Response<List<UserPostEntity>> response) {
@@ -140,7 +143,7 @@ public class UsersDataRepository {
            @NonNull
            @Override
            protected Call<List<UserDetails>> createCall() {
-               Call<List<UserDetails>> call =  ApiClient.getInstance().getUsers();
+               Call<List<UserDetails>> call =  ApiClient.getInstance().getUsers((finalPageNumber -1)*10, finalPageNumber * 10);
 
                return call;
            }
@@ -154,9 +157,13 @@ public class UsersDataRepository {
         RoomDb.insertUserData(dbInstance,user1,address1,company1);
     }
 
-    public LiveData<Resource<List<UserPostEntity>>> getUserPosts(int user_id) {
+    public LiveData<Resource<List<UserPostEntity>>> getUserPosts(int user_id, int pageNumber) {
+        if(pageNumber==0){
+            pageNumber++;
+        }
 
 
+        int finalPageNumber = pageNumber;
         return new NetworkBoundResource<List<UserPostEntity>, List<UserPostEntity>>() {
             @Override
             protected void saveCallResult(@NonNull List<UserPostEntity> itemList) {
@@ -199,7 +206,7 @@ public class UsersDataRepository {
             @NonNull
             @Override
             protected Call<List<UserPostEntity>> createCall() {
-                Call<List<UserPostEntity>> call = ApiClient.getInstance().getPosts(user_id);
+                Call<List<UserPostEntity>> call = ApiClient.getInstance().getPosts(user_id,(finalPageNumber -1)*10, finalPageNumber *10);
                 return call;
             }
         }.getAsLiveData();
@@ -222,6 +229,45 @@ public class UsersDataRepository {
             }
         });
         return mutableLivePostCommentData;
+    }
+
+
+    public LiveData<PostComment> updatePostComment(PostComment postComment){
+        Call<PostComment> call = ApiClient.getInstance().updatePostComment(postComment.getId(),postComment);
+
+        call.enqueue(new Callback<PostComment>() {
+            @Override
+            public void onResponse(Call<PostComment> call, Response<PostComment> response) {
+
+                mutableLivePostCommentData.setValue( response.body());
+            }
+
+            @Override
+            public void onFailure(Call<PostComment> call, Throwable t) {
+                Log.d(TAG, "onFailure: failed to fetch user list from server"+t.getMessage());
+            }
+        });
+        return mutableLivePostCommentData;
+    }//deleteComment
+
+    public LiveData<String> deletePostComment(PostComment postComment){
+        Call<Object> call = ApiClient.getInstance().deleteComment(postComment.getId());
+
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                mutableLivedeleteResponse.setValue( "Success");
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d(TAG, "onFailure: failed to fetch user list from server"+t.getMessage());
+                mutableLivedeleteResponse.setValue( "Failure");
+            }
+        });
+
+        return mutableLivedeleteResponse;
     }
 
     public LiveData<Resource<List<PostComment>>> getPostComment(int post_id) {
