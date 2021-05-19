@@ -14,4 +14,20 @@ This project is a blogging application that allows the users to perform the foll
 * Deletion of Post Comments
 
 # Setting up the application
-``` git clone
+```
+git clone https://github.com/JovanDon/MVVM-App.git
+```
+
+# Running the project
+* Open the project with Android Studio
+* Wait for gradle build to finish building.
+* Run the project with either an emulator or any Android Device conected via a USB.
+
+# Author
+Software Engineer: Mutesasira Jovan
+### Developer Stacks  
+Java/Android
+PHP/Laravel
+### Profile
+- [LinkedIn](https://www.linkedin.com/in/mutesasira-jovan-13aa04b2/)
+
