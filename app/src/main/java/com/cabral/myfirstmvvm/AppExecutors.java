@@ -36,6 +36,9 @@ public class AppExecutors {
 
     private final Executor mMainThread = new MainThreadExecutor();
 
+    private final Executor mNetworkIO=Executors.newFixedThreadPool(3);
+
+
     private static AppExecutors instance;
 
     public static AppExecutors getInstance(){
@@ -52,6 +55,9 @@ public class AppExecutors {
         return mDiskIO;
     }
 
+    public Executor NetworkIO() {
+        return mNetworkIO;
+    }
 
     public Executor mainThread() {
         return mMainThread;

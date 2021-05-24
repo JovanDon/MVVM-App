@@ -11,7 +11,8 @@ import com.cabral.myfirstmvvm.network.db.entities.PostComment;
 import java.util.List;
 
 @Dao
-public interface PostCommentDao {
+public interface
+PostCommentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(PostComment postComment);
 

@@ -33,6 +33,7 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
         UserPostItemBinding binding= DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.user_post_item, parent,false);
         binding.setCallback(mPostClickCallback);
+
         return new UserPostAdapter.UserPostHolder(binding);
     }
 
@@ -42,6 +43,7 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
         holder.binding.setUserPost(mUserPosts.get(position));
         holder.binding.executePendingBindings();
     }
+
     public void setPostList( List<? extends UserPostEntity> postList){
         if(mUserPosts==null){
             mUserPosts=postList;

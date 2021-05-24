@@ -1,5 +1,7 @@
 package com.cabral.myfirstmvvm.util;
 
+import android.os.AsyncTask;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,7 +9,10 @@ import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
-import android.os.AsyncTask;
+
+import com.cabral.myfirstmvvm.AppExecutors;
+
+import java.util.concurrent.Executor;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,19 +55,19 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     @MainThread
     private void saveResultAndReInit(RequestType response) {
-        new AsyncTask<Void, Void, Void>() {
 
-            @Override
-            protected Void doInBackground(Void... voids) {
-                saveCallResult(response);
-                return null;
-            }
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            saveCallResult(response);
+            AppExecutors.getInstance().mainThread().execute(() ->
+                    // we specially request a new live data,
+                    // otherwise we will get immediately last cached value,
+                    // which may not be updated with latest results received from network.
+                    result.addSource(loadFromDb(),
+                            newData -> result.setValue(Resource.success(newData)))
+            );
+        });
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                result.addSource(loadFromDb(), newData -> result.setValue(Resource.success(newData)));
-            }
-        }.execute();
+
     }
 
     @WorkerThread
